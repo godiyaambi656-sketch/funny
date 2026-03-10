@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Roast Generator PRO</title>
+<style>
+body{
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  margin:0;
+}
+header{
+  background:#ef4444;
+  padding:25px;
+  font-size:28px;
+  font-weight:bold;
+}
+.container{
+  padding:40px;
+}
+input, select{
+  padding:12px;
+  width:60%;
+  border-radius:6px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
+}
+button{
+  background:#f59e0b;
+  border:none;
+  padding:14px 20px;
+  font-size:16px;
+  border-radius:8px;
+  cursor:pointer;
+  margin:10px;
+}
+button:hover{
+  background:#f97316;
+}
+#roastBox{
+  margin-top:30px;
+  font-size:22px;
+  background:#1e293b;
+  padding:25px;
+  border-radius:10px;
+  width:60%;
+  margin:auto;
+  min-height:50px;
+}
+footer{
+  margin-top:50px;
+  padding:20px;
+  background:black;
+  font-size:14px;
+}
+.light{
+  background:white;
+  color:black;
+}
+</style>
+</head>
+<body>
+
+<header>
+🔥 AI ChatGPT Roast Generator PRO
+<br><br>
+<button onclick="toggleMode()">🌙 Toggle Dark / Light</button>
+</header>
+
+<div class="container">
+<h2>Enter a Name or Phrase</h2>
+<input id="userInput" placeholder="Type something to roast...">
+<br><br>
+<select id="roastStyle">
+  <option value="funny">Funny Roast 😂</option>
+  <option value="savage">Savage Roast 😈</option>
+  <option value="gamer">Gamer Roast 🎮</option>
+  <option value="smart">Smart Roast 🧠</option>
+</select>
+<br><br>
+<button onclick="generateRoast()">Generate AI Roast</button>
+<button onclick="shareRoast()">Share Roast</button>
+
+<div id="roastBox">
+Your AI roast will appear here 😎
+</div>
+</div>
+
+<footer>
+Made with ❤️ using OpenAI API
+</footer>
+
+<script>
+// Toggle dark/light mode
+function toggleMode(){
+  document.body.classList.toggle("light");
+}
+
+// Share roast to WhatsApp
+function shareRoast(){
+  let text = document.getElementById("roastBox").innerText;
+  if(text===""){alert("Generate a roast first!"); return;}
+  let message = text + " 🤣 Check out more AI roasts at my website!";
+  let url = "https://wa.me/?text=" + encodeURIComponent(message);
+  window.open(url,"_blank");
+}
+
+// Main AI roast function
+async function generateRoast(){
+  let input = document.getElementById("userInput").value.trim();
+  let style = document.getElementById("roastStyle").value;
+  let outputBox = document.getElementById("roastBox");
+
+  if(input===""){alert("Type something first!"); return;}
+
+  outputBox.innerText = "Generating roast... 😎";
+
+  // **Replace YOUR_API_KEY_HERE with your OpenAI API key**
+  const apiKey = "YOUR_API_KEY_HERE";
+
+  try {
+    let response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer " + apiKey
+      },
+      body: JSON.stringify({
+        model:"gpt-3.5-turbo",
+        messages:[
+          {
+            role:"system",
+            content:"You are a witty and funny roast generator. Keep it short, funny, and tailored to the user."
+          },
+          {
+            role:"user",
+            content:`Generate a ${style} roast for: "${input}"`
+          }
+        ],
+        max_tokens:100,
+        temperature:0.9
+      })
+    });
+
+    let data = await response.json();
+    let roast = data.choices[0].message.content;
+    outputBox.innerText = roast;
+
+  } catch(err){
+    console.error(err);
+    outputBox.innerText = "Error generating roast. Try again!";
+  }
+}
+</script>
+
+</body>
+</html>

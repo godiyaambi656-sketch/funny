@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>entertainment blog</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#0d0d0d;
+  color:white;
+  transition:0.3s;
+}
+
+/* HEADER */
+header{
+  background:#000;
+  padding:20px;
+  position:sticky;
+  top:0;
+  z-index:2000;
+  box-shadow:0 0 20px rgba(255,0,102,0.5);
+}
+#logo{
+  font-size:32px;
+  font-weight:bold;
+  background:linear-gradient(45deg,#ff0033,#ff00cc);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* NAV */
+#menu-btn{
+  display:none;
+  font-size:30px;
+  float:right;
+  cursor:pointer;
+  color:#ff00cc;
+}
+nav{
+  margin-top:15px;
+}
+nav a{
+  color:white;
+  margin-right:18px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* DROPDOWN */
+.dropdown{position:relative;display:inline-block;}
+.dropdown-content{
+  display:none;
+  position:absolute;
+  background:#111;
+  padding:10px;
+  border-radius:5px;
+  box-shadow:0 0 15px rgba(255,0,204,0.5);
+}
+.dropdown:hover .dropdown-content{display:block;}
+.dropdown-content a{
+  color:white;
+  padding:10px;
+  display:block;
+}
+
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  nav{display:none;flex-direction:column;}
+  nav a{margin:10px 0;}
+}
+
+/* SEARCH */
+#search{
+  padding:10px;
+  width:250px;
+  border-radius:5px;
+  border:none;
+  margin-top:10px;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(45deg,#ff0033,#ff00cc);
+  padding:60px;
+  text-align:center;
+  color:white;
+  box-shadow:0 0 30px rgba(255,0,102,0.6);
+}
+
+/* SLIDER */
+section{padding:30px;}
+.slider{
+  display:flex;
+  overflow-x:auto;
+  gap:20px;
+}
+.slide{
+  min-width:270px;
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  color:white;
+  box-shadow:0 0 20px rgba(255,0,204,0.3);
+}
+
+/* CARDS */
+.card{
+  background:#111;
+  padding:15px;
+  margin:15px 0;
+  border-radius:10px;
+  box-shadow:0 0 15px rgba(255,0,204,0.15);
+}
+.card img{
+  width:100%;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* LIKE + EDIT + DELETE BUTTONS */
+.like-btn, .edit-btn, .delete-btn{
+  padding:7px 10px;
+  border-radius:5px;
+  cursor:pointer;
+  display:inline-block;
+  margin-right:10px;
+}
+.like-btn{background:#ff00cc;}
+.edit-btn{background:#007bff;}
+.delete-btn{background:#ff0033;}
+
+/* COMMENTS */
+.comment-box{
+  width:100%;
+  padding:10px;
+  border:none;
+  margin-top:10px;
+  border-radius:5px;
+}
+
+/* NEWSLETTER */
+#newsletter{
+  background:#111;
+  text-align:center;
+  padding:30px;
+  box-shadow:0 0 20px rgba(255,0,204,0.3);
+}
+#newsletter input{
+  padding:10px;
+  width:260px;
+  border:none;
+  border-radius:5px;
+}
+#newsletter button{
+  padding:10px 15px;
+  background:#ff00cc;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  color:white;
+  margin-left:10px;
+}
+
+/* ADMIN */
+#admin{
+  background:#0c0c0c;
+  padding:30px;
+  box-shadow:0 0 20px rgba(255,0,204,0.2);
+}
+#admin input,#admin textarea,#admin select{
+  width:100%;
+  padding:10px;
+  border:none;
+  margin:10px 0;
+  border-radius:5px;
+}
+#admin button{
+  padding:14px;
+  background:#ff0033;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+}
+
+/* PREVIEW */
+#featuredPreview{
+  width:200px;display:none;margin-top:10px;border-radius:5px;
+}
+#imagePreviewArea img{
+  width:100px;border-radius:6px;
+}
+#videoPreview iframe,
+#videoPreview video{
+  margin-top:10px;border-radius:6px;
+}
+
+/* FOOTER */
+.footer{
+  background:#000;
+  padding:20px;
+  text-align:center;
+  margin-top:40px;
+}
+
+</style>
+
+
+<script>
+
+/* MENU */
+function toggleMenu(){
+  let nav=document.getElementById("nav");
+  nav.style.display = nav.style.display==="block"?"none":"block";
+}
+
+/* SEARCH */
+function searchCards(){
+  let v=document.getElementById("search").value.toLowerCase();
+  let cards=document.getElementsByClassName("card");
+  for(let c of cards){
+    c.style.display = c.innerText.toLowerCase().includes(v)?"block":"none";
+  }
+}
+
+/* VIDEO EMBED */
+function generateVideoEmbed(url){
+  if(url.includes("youtube.com/watch") || url.includes("youtu.be")){
+    let id = url.split("v=")[1] || url.split("/").pop();
+    return `<iframe width="100%" height="300" src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+  }
+  if(url.includes("tiktok.com")){
+    return `<blockquote class="tiktok-embed" cite="${url}" style="max-width:100%;"></blockquote>`;
+  }
+  if(url.endsWith(".mp4")){
+    return `<video src="${url}" controls width="100%" style="margin-top:10px;"></video>`;
+  }
+  return "";
+}
+
+/* PREVIEW FEATURED */
+function previewFeatured(){
+  let url=document.getElementById("p-featured").value;
+  let img=document.getElementById("featuredPreview");
+  if(url.length>5){
+    img.src=url; img.style.display="block";
+  } else img.style.display="none";
+}
+
+/* PREVIEW IMAGES */
+function previewImages(){
+  let urls=document.getElementById("p-images").value.trim().split("\n");
+  let box=document.getElementById("imagePreviewArea");
+  box.innerHTML="";
+  urls.forEach(u=>{
+    if(u.length>5) box.innerHTML+=`<img src="${u}">`;
+  });
+}
+
+/* PREVIEW VIDEO */
+function previewVideo(){
+  let url=document.getElementById("p-video").value;
+  document.getElementById("videoPreview").innerHTML = generateVideoEmbed(url);
+}
+
+/* AUTOGENERATED POSTS */
+function randomPost(){
+  let titles=[
+    "🔥 Celebrity shocks fans with new look",
+    "🎬 New movie trailer goes viral worldwide",
+    "🎵 Music artist releases surprise album",
+    "🌍 Global TikTok challenge takes over",
+    "💥 Massive Twitter drama unfolds overnight"
+  ];
+
+  let images=[
+    "https://picsum.photos/600/300?random="+Math.random(),
+    "https://picsum.photos/600/400?random="+Math.random()
+  ];
+
+  let videos=[
+    "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    "https://www.youtube.com/watch?v=kXYiU_JCYtU"
+  ];
+
+  return {
+    title: titles[Math.floor(Math.random()*titles.length)],
+    category: "Trending",
+    featured: images[0],
+    images: [images[1]],
+    video: videos[Math.floor(Math.random()*videos.length)],
+    content: "This auto‑generated post is trending right now!",
+    likes: Math.floor(Math.random()*50),
+    comments: ["🔥🔥🔥","Amazing!","Wow"]
+  };
+}
+
+let trending20 = Array.from({length:20},()=>randomPost());
+
+let posts = JSON.parse(localStorage.getItem("posts")) || trending20;
+
+/* INFINITE SCROLL */
+window.onscroll=function(){
+  if(window.innerHeight + window.scrollY >= document.body.offsetHeight){
+    posts.push(randomPost());
+    displayPosts();
+  }
+};
+
+/* DISPLAY POSTS */
+function displayPosts(){
+  let box=document.getElementById("dynamic-posts");
+  box.innerHTML="";
+
+  posts.forEach((p,i)=>{
+    box.innerHTML+=`
+      <div class="card">
+
+        ${p.featured ? `<img src="${p.featured}">` : ""}
+
+        ${p.images.map(img => `<img src="${img}" style="margin-top:10px;">`).join("")}
+
+        ${p.video ? generateVideoEmbed(p.video) : ""}
+
+        <h3>${p.title}</h3>
+        <p>${p.category}</p>
+        <p>${p.content}</p>
+
+        <div>
+          <span class="like-btn" onclick="likePost(${i})">❤️ Like (${p.likes})</span>
+          <span class="edit-btn" onclick="editPost(${i})">✏ Edit</span>
+          <span class="delete-btn" onclick="deletePost(${i})">🗑 Delete</span>
+        </div>
+
+        <textarea class="comment-box"
+        placeholder="Write a comment…"
+        onkeydown="saveComment(event,${i},this)"></textarea>
+
+        <div><b>Comments:</b><br>${p.comments.join("<br>")}</div>
+
+      </div>
+    `;
+  });
+}
+
+/* LIKE */
+function likePost(i){
+  posts[i].likes++;
+  localStorage.setItem("posts",JSON.stringify(posts));
+  displayPosts();
+}
+
+/* COMMENTS */
+function saveComment(e,i,input){
+  if(e.key==="Enter"){
+    posts[i].comments.push(input.value);
+    input.value="";
+    localStorage.setItem("posts",JSON.stringify(posts));
+    displayPosts();
+  }
+}
+
+/* ADD POST */
+function addPost(){
+  let t=document.getElementById("p-title").value;
+  let c=document.getElementById("p-category").value;
+  let f=document.getElementById("p-featured").value;
+  let imgs=document.getElementById("p-images").value.trim().split("\n");
+  let v=document.getElementById("p-video").value;
+  let ct=document.getElementById("p-content").value;
+
+  posts.unshift({
+    title:t,
+    category:c,
+    featured:f,
+    images:imgs,
+    video:v,
+    content:ct,
+    likes:0,
+    comments:[]
+  });
+
+  localStorage.setItem("posts",JSON.stringify(posts));
+  alert("Post added!");
+  displayPosts();
+}
+
+/* EDIT POST */
+function editPost(i){
+  let p=posts[i];
+
+  document.getElementById("p-title").value = p.title;
+  document.getElementById("p-category").value = p.category;
+  document.getElementById("p-featured").value = p.featured;
+  document.getElementById("p-images").value = p.images.join("\n");
+  document.getElementById("p-video").value = p.video;
+  document.getElementById("p-content").value = p.content;
+
+  previewFeatured();
+  previewImages();
+  previewVideo();
+
+  alert("Scroll to Admin Panel to update the post.\nClick 'Save Changes'");
+}
+
+/* DELETE POST */
+function deletePost(i){
+  if(confirm("Delete this post?")){
+    posts.splice(i,1);
+    localStorage.setItem("posts",JSON.stringify(posts));
+    displayPosts();
+  }
+}
+
+window.onload=displayPosts;
+
+</script>
+
+</head>
+<body>
+
+<header>
+  <span id="logo">entertainment blog</span>
+  <span id="menu-btn" onclick="toggleMenu()">☰</span>
+
+  <nav id="nav">
+    <a href="#home">Home</a>
+
+    <div class="dropdown">
+      <a>Movies ▼</a>
+      <div class="dropdown-content">
+        <a>Reviews</a>
+        <a>Trailers</a>
+        <a>Upcoming</a>
+      </div>
+    </div>
+
+    <a href="#music">Music</a>
+    <a href="#celebrity">Celebrity</a>
+    <a href="#blog">Blog</a>
+    <a href="#videos">Videos</a>
+    <a href="#admin">Admin</a>
+  </nav>
+
+  <input id="search" onkeyup="searchCards()" placeholder="Search posts…">
+</header>
+
+<div class="hero" id="home">
+  <h2>🔥 entertainment blog</h2>
+  <p>Your source for movies, music and celebrity news.</p>
+</div>
+
+<section>
+  <h2>🔥 Trending Now</h2>
+  <div class="slider">
+    <div class="slide">New Marvel movie breaks records!</div>
+    <div class="slide">Top 10 songs of the month</div>
+    <div class="slide">Celebrity drama everywhere</div>
+  </div>
+</section>
+
+<section id="dynamic-posts"></section>
+
+<div id="newsletter">
+  <h2>📩 Join Our Newsletter</h2>
+  <input placeholder="Your email">
+  <button>Subscribe</button>
+</div>
+
+<section id="admin">
+  <h2>🛠 Admin Panel</h2>
+
+  <p><b>Post Title</b></p>
+  <input id="p-title">
+
+  <p><b>Category</b></p>
+  <select id="p-category">
+    <option>Movies</option>
+    <option>Music</option>
+    <option>Celebrity</option>
+    <option>Lifestyle</option>
+    <option>Blog</option>
+    <option>Video</option>
+  </select>
+
+  <p><b>Featured Image URL</b></p>
+  <input id="p-featured" oninput="previewFeatured()">
+  <img id="featuredPreview">
+
+  <p><b>Additional Image URLs (one per line)</b></p>
+  <textarea id="p-images" rows="3" oninput="previewImages()"></textarea>
+  <div id="imagePreviewArea" style="margin-top:10px;"></div>
+
+  <p><b>Video URL</b> (YouTube / TikTok / MP4)</p>
+  <input id="p-video" oninput="previewVideo()">
+  <div id="videoPreview"></div>
+
+  <p><b>Post Content</b></p>
+  <textarea id="p-content" rows="5"></textarea>
+
+  <button onclick="addPost()">Add Post</button>
+</section>
+
+<div class="footer">
+  © 2026 entertainment blog
+</div>
+
+</body>
+</html>

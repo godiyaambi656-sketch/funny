@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>entertainment blog</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ICONS -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- =======================
+     INLINE CSS STARTS HERE
+     PART 2 WILL CONTINUE CSS
+========================== -->
+<style>
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#0d0d0d;
+    color:white;
+    transition:0.3s;
+    overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+    background:#000;
+    padding:20px;
+    position:sticky;
+    top:0;
+    z-index:2000;
+    box-shadow:0 0 20px rgba(255,0,102,0.5);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+#logo{
+    font-size:32px;
+    font-weight:bold;
+    background:linear-gradient(45deg,#ff0033,#ff00cc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* NAVIGATION */
+#menu-btn{
+    display:none;
+    font-size:32px;
+    cursor:pointer;
+    color:#ff00cc;
+}
+
+nav{
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    color:white;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+nav a:hover{
+    color:#ff00cc;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+    #menu-btn{
+        display:block;
+    }
+    nav{
+        display:none;
+        flex-direction:column;
+        background:#000;
+        padding:20px;
+        width:100%;
+    }
+    nav a{
+        margin:10px 0;
+    }
+}
+
+/* SEARCH BAR */
+#search{
+    margin-left:20px;
+    padding:10px;
+    width:220px;
+    border:none;
+    border-radius:5px;
+    background:#222;
+    color:white;
+}
+
+/* HERO SECTION */
+.hero{
+    padding:50px;
+    text-align:center;
+    background:linear-gradient(45deg,#ff0033,#ff00cc);
+    box-shadow:0 0 30px rgba(255,0,102,0.6);
+}
+
+.hero h1{
+    font-size:42px;
+}
+
+.hero p{
+    margin-top:10px;
+    font-size:20px;
+}
+
+/* LAYOUT: MAIN + SIDEBAR */
+#layout{
+    display:flex;
+    gap:30px;
+    padding:30px;
+}
+
+#main{
+    width:70%;
+}
+
+#sidebar{
+    width:30%;
+}
+
+/* SIDEBAR BOX */
+.sidebar-box{
+    background:#111;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+    box-shadow:0 0 15px rgba(255,0,204,0.2);
+}
+
+.sidebar-box h3{
+    margin-bottom:10px;
+    border-bottom:1px solid #333;
+    padding-bottom:5px;
+}
+
+/* SECTION TITLES */
+.section-title{
+    font-size:26px;
+    margin:20px 0;
+    border-left:5px solid #ff00cc;
+    padding-left:10px;
+}
+
+/* POST CARD */
+.card{
+    background:#111;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:25px;
+    box-shadow:0 0 15px rgba(255,0,204,0.15);
+    cursor:pointer;
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+/* LIKE / BUTTONS */
+.like-btn, .fav-btn, .edit-btn, .delete-btn{
+    padding:7px 10px;
+    border-radius:5px;
+    cursor:pointer;
+    display:inline-block;
+    margin-right:10px;
+}
+
+.like-btn{ background:#ff00cc; }
+.fav-btn{ background:#ff6600; }
+.edit-btn{ background:#007bff; }
+.delete-btn{ background:#ff0033; }
+
+/* COMMENTS */
+.comment-box{
+    width:100%;
+    padding:10px;
+    border-radius:5px;
+    border:none;
+    margin-top:10px;
+}
+
+/* POST MODAL WINDOW */
+#postModal{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.9);
+    display:none;
+    justify-content:center;
+    align-items:flex-start;
+    padding-top:50px;
+    z-index:3000;
+}
+
+#modalContent{
+    width:80%;
+    max-height:90%;
+    overflow-y:auto;
+    background:#111;
+    padding:20px;
+    border-radius:10px;
+}
+
+#closeModal{
+    float:right;
+    cursor:pointer;
+    font-size:26px;
+    color:#ff00cc;
+}
+
+/* NEWSLETTER */
+#newsletter{
+    background:#111;
+    text-align:center;
+    padding:30px;
+    margin:20px 0;
+    border-radius:10px;
+}
+
+#newsletter input{
+    padding:10px;width:240px;border-radius:5px;border:none;background:#222;color:white;
+}
+
+#newsletter button{
+    padding:10px 20px;
+    border:none;
+    background:#ff00cc;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* ADMIN PANEL */
+#admin{
+    background:#0c0c0c;
+    padding:30px;
+    margin-top:40px;
+    border-radius:10px;
+    box-shadow:0 0 20px rgba(255,0,204,0.2);
+}
+
+#admin input,#admin textarea,#admin select{
+    width:100%;
+    padding:10px;
+    border:none;
+    margin:10px 0;
+    border-radius:5px;
+}
+
+#admin button{
+    padding:14px;
+    background:#ff0033;
+    border:none;
+    border-radius:5px;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* PREVIEW BOXES */
+#featuredPreview{
+    width:200px;display:none;margin-top:10px;border-radius:5px;
+}
+
+#imagePreviewArea img{
+    width:100px;margin:5px;border-radius:5px;
+}
+
+#videoPreview iframe, #videoPreview video{
+    margin-top:10px;
+    border-radius:6px;
+}
+
+/* FOOTER */
+.footer{
+    background:#000;
+    padding:20px;
+    text-align:center;
+    margin-top:40px;
+    border-top:1px solid #222;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <span id="logo">entertainment blog</span>
+    <span id="menu-btn" onclick="toggleMenu()">☰</span>
+
+    <nav id="nav">
+        <a href="#home">Home</a>
+        <a href="#movies">Movies</a>
+        <a href="#music">Music</a>
+        <a href="#celebrity">Celebrity</a>
+        <a href="#lifestyle">Lifestyle</a>
+        <a href="#videos">Videos</a>
+        <a href="#admin">Admin</a>
+    </nav>
+</header>
+
+<!-- HERO SECTION -->
+<div class="hero" id="home">
+    <h1>🔥 entertainment blog</h1>
+    <p>Your news hub for movies, music & celebrity culture.</p>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div id="layout">
+
+    <!-- MAIN CONTENT -->
+    <div id="main">
+
+        <!-- FEATURED / TRENDING POSTS -->
+        <h2 class="section-title">🔥 Trending</h2>
+        <div id="trending"></div>
+
+        <!-- CATEGORY SECTIONS -->
+        <h2 class="section-title" id="movies">🎬 Movies</h2>
+        <div id="moviesPosts"></div>
+
+        <h2 class="section-title" id="music">🎵 Music</h2>
+        <div id="musicPosts"></div>
+
+        <h2 class="section-title" id="celebrity">🌟 Celebrity</h2>
+        <div id="celebrityPosts"></div>
+
+        <h2 class="section-title" id="lifestyle">💄 Lifestyle</h2>
+        <div id="lifestylePosts"></div>
+
+        <h2 class="section-title" id="videos">📺 Videos</h2>
+        <div id="videoPosts"></div>
+
+    </div><!-- END MAIN -->
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+
+        <div class="sidebar-box">
+            <h3>📌 Most Liked Posts</h3>
+            <div id="mostLiked"></div>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>⭐ Most Commented</h3>
+            <div id="mostCommented"></div>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>📁 Categories</h3>
+            <p>Movies</p>
+            <p>Music</p>
+            <p>Celebrity</p>
+            <p>Lifestyle</p>
+            <p>Videos</p>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>📲 Follow Us</h3>
+            <p>Instagram</p>
+            <p>TikTok</p>
+            <p>YouTube</p>
+            <p>Facebook</p>
+        </div>
+
+    </div><!-- END SIDEBAR -->
+
+</div><!-- END LAYOUT -->
+
+<!-- POST MODAL -->
+<div id="postModal">
+    <div id="modalContent">
+        <span id="closeModal" onclick="closeModal()">✖</span>
+        <div id="modalInnerContent"></div>
+    </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div id="newsletter">
+    <h3>📩 Join Our Newsletter</h3>
+    <input placeholder="Your email">
+    <button>Subscribe</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<section id="admin">
+    <h2>🛠 Admin Panel</h2>
+
+    <p><b>Post Title</b></p>
+    <input id="p-title" placeholder="Enter post title">
+
+    <p><b>Category</b></p>
+    <select id="p-category">
+        <option>Movies</option>
+        <option>Music</option>
+        <option>Celebrity</option>
+        <option>Lifestyle</option>
+        <option>Video</option>
+        <option>Blog</option>
+    </select>
+
+    <p><b>Featured Image</b></p>
+    <input id="p-featured" oninput="previewFeatured()">
+    <img id="featuredPreview">
+
+    <p><b>Additional Images (one per line)</b></p>
+    <textarea id="p-images" rows="3" oninput="previewImages()"></textarea>
+    <div id="imagePreviewArea"></div>
+
+    <p><b>Video URL</b></p>
+    <input id="p-video" oninput="previewVideo()">
+    <div id="videoPreview"></div>
+
+    <p><b>Content</b></p>
+    <textarea id="p-content" rows="5"></textarea>
+
+    <button onclick="addPost()">Add Post</button>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 entertainment blog — All Rights Reserved
+</div>
+
+<!-- ============================
+     END OF PART 1 (HTML)
+============================ -->
+</body>
+</html>

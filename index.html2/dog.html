@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chika | Dogs & Care Guide</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f5f7fb;
+color:#333;
+}
+
+header{
+background:#1f3c88;
+color:white;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+header h1{
+margin:0;
+}
+
+nav a{
+color:white;
+margin:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.hero{
+background:url("https://images.unsplash.com/photo-1543466835-00a7907e9de1");
+background-size:cover;
+height:400px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:40px;
+font-weight:bold;
+}
+
+section{
+padding:40px;
+}
+
+h2{
+text-align:center;
+margin-bottom:30px;
+color:#1f3c88;
+}
+
+.catalog{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.dog-card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.dog-card:hover{
+transform:scale(1.05);
+}
+
+.dog-card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.dog-info{
+padding:15px;
+}
+
+button{
+background:#ff7a18;
+border:none;
+padding:10px 15px;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff5400;
+}
+
+.search{
+text-align:center;
+margin-bottom:30px;
+}
+
+.search input{
+padding:10px;
+width:250px;
+}
+
+.videos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.video-box iframe{
+width:100%;
+height:200px;
+border:none;
+}
+
+.tips{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.tip{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+footer{
+background:#1f3c88;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>🐶 Chika</h1>
+
+<nav>
+<a href="#">Home</a>
+<a href="#catalog">Dogs</a>
+<a href="#videos">Videos</a>
+<a href="#tips">Care Tips</a>
+</nav>
+
+</header>
+
+<div class="hero">
+Find Your Perfect Dog
+</div>
+
+
+<section id="catalog">
+
+<h2>Dog Catalog</h2>
+
+<div class="search">
+<input type="text" id="search" placeholder="Search dog breed..." onkeyup="searchDogs()">
+</div>
+
+<div class="catalog" id="dogList">
+
+<div class="dog-card">
+<img src="https://images.unsplash.com/photo-1552053831-71594a27632d">
+<div class="dog-info">
+<h3>Labrador</h3>
+<p>Age: 2 months</p>
+<p>Price: $300</p>
+<button>Buy Now</button>
+</div>
+</div>
+
+<div class="dog-card">
+<img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee">
+<div class="dog-info">
+<h3>German Shepherd</h3>
+<p>Age: 3 months</p>
+<p>Price: $450</p>
+<button>Buy Now</button>
+</div>
+</div>
+
+<div class="dog-card">
+<img src="https://images.unsplash.com/photo-1558788353-f76d92427f16">
+<div class="dog-info">
+<h3>Golden Retriever</h3>
+<p>Age: 2 months</p>
+<p>Price: $400</p>
+<button>Buy Now</button>
+</div>
+</div>
+
+<div class="dog-card">
+<img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d">
+<div class="dog-info">
+<h3>Rottweiler</h3>
+<p>Age: 4 months</p>
+<p>Price: $500</p>
+<button>Buy Now</button>
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="videos">
+
+<h2>Dog Training & Care Videos</h2>
+
+<div class="videos">
+
+<div class="video-box">
+<iframe src="https://www.youtube.com/embed/1jYh9e2k9Yc"></iframe>
+<p>How to Train a Puppy</p>
+</div>
+
+<div class="video-box">
+<iframe src="https://www.youtube.com/embed/D3mKQ3S5F8I"></iframe>
+<p>Dog Feeding Guide</p>
+</div>
+
+<div class="video-box">
+<iframe src="https://www.youtube.com/embed/b8h3N5vU1tM"></iframe>
+<p>Dog Grooming Tips</p>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="tips">
+
+<h2>Dog Care Tips</h2>
+
+<div class="tips">
+
+<div class="tip">
+<h3>Proper Feeding</h3>
+<p>Feed your dog high-quality food twice daily and provide clean water.</p>
+</div>
+
+<div class="tip">
+<h3>Regular Exercise</h3>
+<p>Dogs need daily exercise to stay healthy and happy.</p>
+</div>
+
+<div class="tip">
+<h3>Vaccination</h3>
+<p>Ensure your dog receives all necessary vaccinations from a vet.</p>
+</div>
+
+<div class="tip">
+<h3>Grooming</h3>
+<p>Brush your dog regularly and maintain proper hygiene.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 Chika Dog Marketplace | Dog Education & Care</p>
+
+</footer>
+
+
+
+<script>
+
+function searchDogs(){
+
+let input=document.getElementById("search").value.toLowerCase();
+
+let cards=document.querySelectorAll(".dog-card");
+
+cards.forEach(card=>{
+
+let title=card.querySelector("h3").textContent.toLowerCase();
+
+if(title.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+
+})
+
+}
+
+</script>
+
+</body>
+</html>

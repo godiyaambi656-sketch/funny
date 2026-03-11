@@ -1,161 +1,272 @@
+
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Roast Generator PRO</title>
+
+<title>🔥 Viral Roast Arena</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
+
 body{
-  font-family: Arial;
-  background:#0f172a;
-  color:white;
-  text-align:center;
-  margin:0;
+background:#0f172a;
+font-family:Arial;
+color:white;
+text-align:center;
+margin:0;
 }
+
 header{
-  background:#ef4444;
-  padding:25px;
-  font-size:28px;
-  font-weight:bold;
+background:#ef4444;
+padding:30px;
+font-size:34px;
+font-weight:bold;
 }
+
 .container{
-  padding:40px;
+padding:40px;
 }
-input, select{
-  padding:12px;
-  width:60%;
-  border-radius:6px;
-  border:none;
-  font-size:16px;
-  margin-top:10px;
+
+input{
+padding:12px;
+width:250px;
+border-radius:8px;
+border:none;
+margin:10px;
+font-size:16px;
 }
+
 button{
-  background:#f59e0b;
-  border:none;
-  padding:14px 20px;
-  font-size:16px;
-  border-radius:8px;
-  cursor:pointer;
-  margin:10px;
+padding:14px 25px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:#f59e0b;
+cursor:pointer;
 }
+
 button:hover{
-  background:#f97316;
+background:#f97316;
 }
-#roastBox{
-  margin-top:30px;
-  font-size:22px;
-  background:#1e293b;
-  padding:25px;
-  border-radius:10px;
-  width:60%;
-  margin:auto;
-  min-height:50px;
+
+.box{
+margin-top:40px;
+background:#1e293b;
+padding:30px;
+border-radius:12px;
+font-size:22px;
+width:70%;
+margin-left:auto;
+margin-right:auto;
+min-height:80px;
 }
+
+.score{
+font-size:20px;
+margin-top:20px;
+}
+
 footer{
-  margin-top:50px;
-  padding:20px;
-  background:black;
-  font-size:14px;
+margin-top:60px;
+padding:20px;
+background:black;
 }
-.light{
-  background:white;
-  color:black;
-}
+
 </style>
+
 </head>
+
 <body>
 
 <header>
-🔥 AI ChatGPT Roast Generator PRO
-<br><br>
-<button onclick="toggleMode()">🌙 Toggle Dark / Light</button>
+🔥 Viral Roast Arena
 </header>
 
 <div class="container">
-<h2>Enter a Name or Phrase</h2>
-<input id="userInput" placeholder="Type something to roast...">
-<br><br>
-<select id="roastStyle">
-  <option value="funny">Funny Roast 😂</option>
-  <option value="savage">Savage Roast 😈</option>
-  <option value="gamer">Gamer Roast 🎮</option>
-  <option value="smart">Smart Roast 🧠</option>
-</select>
-<br><br>
-<button onclick="generateRoast()">Generate AI Roast</button>
-<button onclick="shareRoast()">Share Roast</button>
 
-<div id="roastBox">
-Your AI roast will appear here 😎
+<h2>Roast Your Friends 😆</h2>
+
+<input id="nameInput" placeholder="Enter your friend's name">
+
+<br>
+
+<button onclick="roastName()">👤 Roast Name</button>
+
+<button onclick="generateRoast()">🔥 Random Roast</button>
+
+<button onclick="generateJoke()">😂 Random Joke</button>
+
+<button onclick="roastBattle()">🎮 Roast Battle</button>
+
+<button onclick="share()">📱 Share</button>
+
+<div class="box" id="output">
+
+Your roast will appear here 😎
+
 </div>
+
+<div class="score">
+
+Roasts Generated: <span id="wins">0</span>
+
+</div>
+
 </div>
 
 <footer>
-Made with ❤️ using OpenAI API
+
+Viral Roast Arena • Built with HTML 🚀
+
 </footer>
 
 <script>
-// Toggle dark/light mode
-function toggleMode(){
-  document.body.classList.toggle("light");
+
+let wins = 0;
+
+const roasts = [
+
+"NAME has two brain cells and both are on vacation.",
+
+"NAME is living proof that WiFi signals travel faster than thoughts.",
+
+"NAME would lose a staring contest with a mirror.",
+
+"NAME tried to download common sense but the file was missing.",
+
+"If laziness were a job NAME would still be unemployed.",
+
+"NAME's phone battery lasts longer than their attention span.",
+
+"NAME once tried to climb a glass wall to see what's on the other side.",
+
+"NAME is the reason instructions exist.",
+
+"NAME's brain is like Internet Explorer… slow and outdated.",
+
+"NAME brings everyone joy… when they leave.",
+
+"NAME's jokes are so dry even deserts are jealous.",
+
+"NAME tried to Google intelligence but got no results.",
+
+"NAME could trip over a wireless connection.",
+
+"NAME's shadow left because it wanted a brighter future.",
+
+"NAME's brain works like dial-up internet.",
+
+"NAME tried to charge their phone with a potato.",
+
+"NAME once locked themselves out of a cordless phone.",
+
+"NAME could hide their own Easter eggs.",
+
+"NAME's GPS says 'recalculating life choices'.",
+
+"NAME once tried to microwave cereal."
+
+];
+
+const jokes = [
+
+"Why don't programmers like nature? Too many bugs.",
+
+"Why did the computer go to therapy? It had too many bytes.",
+
+"I told my computer I needed a break… it froze.",
+
+"Why was the JavaScript developer sad? Because he didn't Node how to Express himself.",
+
+"Why do programmers prefer dark mode? Because light attracts bugs.",
+
+"What do computers snack on? Microchips.",
+
+"Why was the computer cold? It forgot to close Windows.",
+
+"Why did the developer go broke? Because he used up all his cache.",
+
+"Why did the smartphone need glasses? It lost its contacts.",
+
+"Why did the computer sneeze? It had a virus."
+
+];
+
+function randomItem(array){
+
+return array[Math.floor(Math.random()*array.length)];
+
 }
 
-// Share roast to WhatsApp
-function shareRoast(){
-  let text = document.getElementById("roastBox").innerText;
-  if(text===""){alert("Generate a roast first!"); return;}
-  let message = text + " 🤣 Check out more AI roasts at my website!";
-  let url = "https://wa.me/?text=" + encodeURIComponent(message);
-  window.open(url,"_blank");
+function roastName(){
+
+let name = document.getElementById("nameInput").value;
+
+if(name===""){
+
+alert("Enter a name first!");
+
+return;
+
 }
 
-// Main AI roast function
-async function generateRoast(){
-  let input = document.getElementById("userInput").value.trim();
-  let style = document.getElementById("roastStyle").value;
-  let outputBox = document.getElementById("roastBox");
+let roast = randomItem(roasts).replace("NAME",name);
 
-  if(input===""){alert("Type something first!"); return;}
+document.getElementById("output").innerText = roast;
 
-  outputBox.innerText = "Generating roast... 😎";
+wins++;
 
-  // **Replace YOUR_API_KEY_HERE with your OpenAI API key**
-  const apiKey = "YOUR_API_KEY_HERE";
+document.getElementById("wins").innerText = wins;
 
-  try {
-    let response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":"Bearer " + apiKey
-      },
-      body: JSON.stringify({
-        model:"gpt-3.5-turbo",
-        messages:[
-          {
-            role:"system",
-            content:"You are a witty and funny roast generator. Keep it short, funny, and tailored to the user."
-          },
-          {
-            role:"user",
-            content:`Generate a ${style} roast for: "${input}"`
-          }
-        ],
-        max_tokens:100,
-        temperature:0.9
-      })
-    });
-
-    let data = await response.json();
-    let roast = data.choices[0].message.content;
-    outputBox.innerText = roast;
-
-  } catch(err){
-    console.error(err);
-    outputBox.innerText = "Error generating roast. Try again!";
-  }
 }
+
+function generateRoast(){
+
+let roast = randomItem(roasts).replace("NAME","Someone");
+
+document.getElementById("output").innerText = roast;
+
+wins++;
+
+document.getElementById("wins").innerText = wins;
+
+}
+
+function generateJoke(){
+
+let joke = randomItem(jokes);
+
+document.getElementById("output").innerText = joke;
+
+}
+
+function roastBattle(){
+
+let roast1 = randomItem(roasts).replace("NAME","Player 1");
+
+let roast2 = randomItem(roasts).replace("NAME","Player 2");
+
+document.getElementById("output").innerText =
+"🔥 Roast Battle 🔥\n\nPlayer 1: " + roast1 + "\n\nPlayer 2: " + roast2;
+
+}
+
+function share(){
+
+let text = document.getElementById("output").innerText;
+
+let url = "https://wa.me/?text=" + encodeURIComponent(text + " 🔥 Try Viral Roast Arena!");
+
+window.open(url);
+
+}
+
 </script>
 
 </body>
+
 </html>
